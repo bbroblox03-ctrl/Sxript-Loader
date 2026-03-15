@@ -338,9 +338,9 @@ folderBtn.MouseButton1Click:Connect(function()
 	positionDropBelow(folderBtn)
 	for _, rarity in pairs(rarities) do
 		local col = rarityColors[rarity] or Color3.fromRGB(200, 200, 200)
-		makeDropItem("Folder: Common  "..rarity:sub(1,1):upper()..rarity:sub(2), col, function()
+		makeDropItem("📁  "..rarity:sub(1,1):upper()..rarity:sub(2), col, function()
 			selectedFolder = rarity
-			folderBtn.Text = "Folder: Common  "..rarity:sub(1,1):upper()..rarity:sub(2)
+			folderBtn.Text = "📁  "..rarity:sub(1,1):upper()..rarity:sub(2)
 			closeDrop()
 		end)
 	end
@@ -362,7 +362,7 @@ local function refreshPetDrop()
 
 	local ok, petsFolder = pcall(getPetsFolder)
 	if not ok then
-		makeDropItem("Select Pets ▾", Color3.fromRGB(255, 120, 120), function() end)
+		makeDropItem("⚠ Open the pets menu first!", Color3.fromRGB(255, 120, 120), function() end)
 		scroll.CanvasSize = UDim2.new(0, 0, 0, 35)
 		openDrop(35)
 		return
@@ -378,7 +378,7 @@ local function refreshPetDrop()
 	table.sort(petLabels, function(a, b) return a.Name < b.Name end)
 
 	if #petLabels == 0 then
-		makeDropItem("Select Pets ▾", Color3.fromRGB(255, 180, 80), function() end)
+		makeDropItem("⚠ No pets", Color3.fromRGB(255, 180, 80), function() end)
 		scroll.CanvasSize = UDim2.new(0, 0, 0, 35)
 		openDrop(35)
 		return
