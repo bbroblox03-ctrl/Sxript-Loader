@@ -2,6 +2,7 @@
 -- Transparent background black and white theme
 -- Deep black border
 -- Added close/destroy UI button
+-- Removed title bar box/frame
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -11,11 +12,11 @@ local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 local sellRemote = ReplicatedStorage:WaitForChild("RemotesEvent"):WaitForChild("SellPetEvent")
 
-local selectedFolder = "Common"
+local selectedFolder = "common"
 local selectedPets = {}
 local autoSell = false
 local sellDelay = 1
-local rarities = {"Common", "Rare", "Epic", "Legendary", "Mythic"}
+local rarities = {"common", "rare", "epic", "legendary", "mythic"}
 
 local rarityColors = {
 	common    = Color3.fromRGB(160, 160, 160),
@@ -51,29 +52,17 @@ mainStroke.Color = Color3.fromRGB(10, 10, 10)  -- Deep black border
 mainStroke.Thickness = 2
 mainStroke.Parent = main
 
+-- Title Bar - No separate background box, integrated into main frame
 local titleBar = Instance.new("Frame")
 titleBar.Name = "TitleBar"
 titleBar.Size = UDim2.new(1, 0, 0, 31)
-titleBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-titleBar.BackgroundTransparency = 0.2
+titleBar.BackgroundTransparency = 1  -- Fully transparent, no box
 titleBar.BorderSizePixel = 0
 titleBar.Parent = main
 
-local titleCorner = Instance.new("UICorner")
-titleCorner.CornerRadius = UDim.new(0, 11)
-titleCorner.Parent = titleBar
-
-local titleFix = Instance.new("Frame")
-titleFix.Size = UDim2.new(1, 0, 0.5, 0)
-titleFix.Position = UDim2.new(0, 0, 0.5, 0)
-titleFix.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-titleFix.BackgroundTransparency = 0.2
-titleFix.BorderSizePixel = 0
-titleFix.Parent = titleBar
-
 local titleLabel = Instance.new("TextLabel")
 titleLabel.Size = UDim2.new(1, -60, 1, 0)
-titleLabel.Position = UDim2.new(0, 9, 0, 0)
+titleLabel.Position = UDim2.new(0, 12, 0, 0)
 titleLabel.BackgroundTransparency = 1
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -183,8 +172,8 @@ local function makeButton(text, color, layoutOrder)
 end
 
 local toggleBtn = makeButton("Auto Sell:  OFF", Color3.fromRGB(30, 30, 30), 1)
-local folderBtn = makeButton("📁  Folder:  Common", Color3.fromRGB(25, 25, 25), 2)
-local petBtn    = makeButton("🐾  Select  Pets  ", Color3.fromRGB(25, 25, 25), 3)
+local folderBtn = makeButton("📁  Folder:  COMMON", Color3.fromRGB(25, 25, 25), 2)
+local petBtn    = makeButton("🐾  Select:  PETS ▾", Color3.fromRGB(25, 25, 25), 3)
 
 local dropFrame = Instance.new("Frame")
 dropFrame.Name = "DropFrame"
@@ -519,4 +508,4 @@ UserInputService.InputChanged:Connect(function(input)
 	end
 end)
 
-print("Auto Sell Pets GUI loaded - Black & White Theme with Close Button")
+print("Auto Sell Pets GUI loaded - Clean Title, Black & White Theme")
