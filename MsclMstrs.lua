@@ -7,11 +7,11 @@ local RunService = game:GetService("RunService")
 local player = Players.LocalPlayer
 local sellRemote = ReplicatedStorage:WaitForChild("RemotesEvent"):WaitForChild("SellPetEvent")
 
-local selectedFolder = "common"
+local selectedFolder = "Common"
 local selectedPets = {}
 local autoSell = false
 local sellDelay = 1
-local rarities = {"common", "rare", "epic", "legendary", "mythic"}
+local rarities = {"Common", "Rare", "Epic", "Legendary", "Mythic"}
 
 local rarityColors = {
 	common    = Color3.fromRGB(160, 160, 160),
@@ -69,7 +69,6 @@ titleBar.Name = "TitleBar"
 titleBar.Size = UDim2.new(1, 0, 0, 31)
 titleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
 titleBar.BackgroundTransparency = 0.4  -- TRANSPARENT
-
 titleBar.BorderSizePixel = 0
 titleBar.Parent = main
 
@@ -85,20 +84,45 @@ titleFix.BackgroundTransparency = 0.4
 titleFix.BorderSizePixel = 0
 titleFix.Parent = titleBar
 
+-- TITLE LABEL WITHOUT BOX/EMOJI
 local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, -35, 1, 0)
+titleLabel.Size = UDim2.new(1, -55, 1, 0)  -- Adjusted width for two buttons
+
 titleLabel.Position = UDim2.new(0, 9, 0, 0)
 titleLabel.BackgroundTransparency = 1
 titleLabel.TextColor3 = Color3.fromRGB(230, 230, 255)
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Font = Enum.Font.GothamBold
 titleLabel.TextSize = 12
-titleLabel.Text = "🐾 Auto Sell Pets"
+titleLabel.Text = "Auto Sell Pets"  -- REMOVED THE BOX/EMOJI
 titleLabel.Parent = titleBar
 
+-- CLOSE BUTTON (X)
+local closeBtn = Instance.new("TextButton")
+closeBtn.Name = "CloseBtn"
+closeBtn.Size = UDim2.new(0, 22, 0, 22)
+closeBtn.Position = UDim2.new(1, -26, 0, 4)
+closeBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+closeBtn.BackgroundTransparency = 0.2
+closeBtn.BorderSizePixel = 0
+closeBtn.Text = "X"
+closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+closeBtn.Font = Enum.Font.GothamBold
+closeBtn.TextSize = 12
+closeBtn.Parent = titleBar
+
+local closeCorner = Instance.new("UICorner")
+closeCorner.CornerRadius = UDim.new(1, 0)
+closeCorner.Parent = closeBtn
+
+-- RAINBOW BORDER FOR CLOSE BUTTON
+local closeStroke = createRainbowStroke(closeBtn, 1.5)
+
+-- MINIMIZE BUTTON (moved left to make room for close)
 local minBtn = Instance.new("TextButton")
+minBtn.Name = "MinBtn"
 minBtn.Size = UDim2.new(0, 22, 0, 22)
-minBtn.Position = UDim2.new(1, -26, 0, 4)
+minBtn.Position = UDim2.new(1, -50, 0, 4)  -- Moved left
 minBtn.BackgroundColor3 = Color3.fromRGB(50, 50, 68)
 minBtn.BackgroundTransparency = 0.3
 minBtn.BorderSizePixel = 0
@@ -111,6 +135,43 @@ minBtn.Parent = titleBar
 local minCorner = Instance.new("UICorner")
 minCorner.CornerRadius = UDim.new(1, 0)
 minCorner.Parent = minBtn
+
+-- CLOSE BUTTON FUNCTIONALITY
+closeBtn.MouseEnter:Connect(function()
+	TweenService:Create(closeBtn, TweenInfo.new(0.15), {
+		BackgroundColor3 = Color3.fromRGB(220, 80, 80),
+		BackgroundTransparency = 0.1
+	}):Play()
+end)
+
+closeBtn.MouseLeave:Connect(function()
+	TweenService:Create(closeBtn, TweenInfo.new(0.15), {
+		BackgroundColor3 = Color3.fromRGB(180, 60, 60),
+		BackgroundTransparency = 0.2
+	}):Play()
+end)
+
+closeBtn.MouseButton1Click:Connect(function()
+	-- Fade out and destroy
+	TweenService:Create(main, TweenInfo.new(0.2), {
+		Size = UDim2.new(0, 176, 0, 0),
+		BackgroundTransparency = 1
+	}):Play()
+
+	for _, child in pairs(main:GetDescendants()) do
+		if child:IsA("GuiObject") then
+			TweenService:Create(child, TweenInfo.new(0.15), {
+				BackgroundTransparency = 1,
+				TextTransparency = 1,
+				ImageTransparency = 1
+			}):Play()
+		end
+	end
+
+	task.delay(0.25, function()
+		gui:Destroy()
+	end)
+end)
 
 local content = Instance.new("Frame")
 content.Name = "Content"
@@ -170,8 +231,8 @@ local function makeButton(text, color, layoutOrder)
 end
 
 local toggleBtn = makeButton("AUTO SELL  ●  OFF", Color3.fromRGB(40, 40, 58), 1)
-local folderBtn = makeButton("📁  Folder: common", Color3.fromRGB(35, 35, 52), 2)
-local petBtn    = makeButton("🐾  Select Pets ▾", Color3.fromRGB(35, 35, 52), 3)
+local folderBtn = makeButton("PETS ● Common", Color3.fromRGB(35, 35, 52), 2)
+local petBtn    = makeButton("Select Pets ▾", Color3.fromRGB(35, 35, 52), 3)
 
 local dropFrame = Instance.new("Frame")
 dropFrame.Name = "DropFrame"
