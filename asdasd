@@ -67,7 +67,7 @@ titleLabel.BackgroundTransparency = 1
 titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- White text
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Font = Enum.Font.GothamBold
-titleLabel.TextSize = 15
+titleLabel.TextSize = 13
 titleLabel.Text = "AUTO SELL PETS"
 titleLabel.Parent = titleBar
 
@@ -171,9 +171,9 @@ local function makeButton(text, color, layoutOrder)
 	return btn
 end
 
-local toggleBtn = makeButton("Auto Sell:  OFF", Color3.fromRGB(30, 30, 30), 1)
-local folderBtn = makeButton("Select:  RARITIES", Color3.fromRGB(25, 25, 25), 2)
-local petBtn    = makeButton("Select:  PETS ", Color3.fromRGB(25, 25, 25), 3)
+local toggleBtn = makeButton("Auto Sell:    OFF", Color3.fromRGB(30, 30, 30), 1)
+local folderBtn = makeButton("Select:    RARITIES", Color3.fromRGB(25, 25, 25), 2)
+local petBtn    = makeButton("Select:    PETS ", Color3.fromRGB(25, 25, 25), 3)
 
 local dropFrame = Instance.new("Frame")
 dropFrame.Name = "DropFrame"
