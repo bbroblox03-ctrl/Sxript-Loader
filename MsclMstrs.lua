@@ -27,32 +27,22 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = game.CoreGui
 
--- ===================== RAINBOW BORDER ANIMATION =====================
-local function createRainbowStroke(parent, thickness)
+-- ===================== PLAIN BLACK BORDER =====================
+local function createBlackStroke(parent, thickness)
 	local stroke = Instance.new("UIStroke")
+	stroke.Color = Color3.fromRGB(0, 0, 0)  -- PLAIN BLACK
 	stroke.Thickness = thickness or 2
 	stroke.Parent = parent
-
-	-- Rainbow animation using HSV color cycling
-	local hue = 0
-	local connection = RunService.RenderStepped:Connect(function()
-		hue = (hue + 0.005) % 1
-		stroke.Color = Color3.fromHSV(hue, 1, 1)
-	end)
-
-	-- Store connection for cleanup if needed
-	parent:SetAttribute("RainbowConnection", true)
-
 	return stroke
 end
 
 local main = Instance.new("Frame")
 main.Name = "Main"
-main.Size = UDim2.new(0, 220, 0, 154)  -- INCREASED WIDTH for Destroy GUI button
+main.Size = UDim2.new(0, 220, 0, 154)
 main.AnchorPoint = Vector2.new(0.5, 0)
 main.Position = UDim2.new(0.5, 0, 0, -15)
-main.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
-main.BackgroundTransparency = 0.3  -- TRANSPARENT BACKGROUND
+main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK BACKGROUND
+main.BackgroundTransparency = 0.15  -- SLIGHTLY TRANSPARENT
 main.BorderSizePixel = 0
 main.ClipsDescendants = true
 main.Parent = gui
@@ -61,14 +51,14 @@ local mainCorner = Instance.new("UICorner")
 mainCorner.CornerRadius = UDim.new(0, 11)
 mainCorner.Parent = main
 
--- RAINBOW BORDER
-local mainStroke = createRainbowStroke(main, 2)
+-- PLAIN BLACK BORDER
+local mainStroke = createBlackStroke(main, 2)
 
 local titleBar = Instance.new("Frame")
 titleBar.Name = "TitleBar"
 titleBar.Size = UDim2.new(1, 0, 0, 31)
-titleBar.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
-titleBar.BackgroundTransparency = 0.4  -- TRANSPARENT
+titleBar.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK
+titleBar.BackgroundTransparency = 0.1
 titleBar.BorderSizePixel = 0
 titleBar.Parent = main
 
@@ -79,54 +69,55 @@ titleCorner.Parent = titleBar
 local titleFix = Instance.new("Frame")
 titleFix.Size = UDim2.new(1, 0, 0.5, 0)
 titleFix.Position = UDim2.new(0, 0, 0.5, 0)
-titleFix.BackgroundColor3 = Color3.fromRGB(30, 30, 42)
-titleFix.BackgroundTransparency = 0.4
+titleFix.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+titleFix.BackgroundTransparency = 0.1
 titleFix.BorderSizePixel = 0
 titleFix.Parent = titleBar
 
--- TITLE LABEL WITHOUT BOX/EMOJI
+-- TITLE LABEL - WHITE TEXT
 local titleLabel = Instance.new("TextLabel")
-titleLabel.Size = UDim2.new(1, -100, 1, 0)  -- Adjusted width for buttons
+titleLabel.Size = UDim2.new(1, -100, 1, 0)
 titleLabel.Position = UDim2.new(0, 9, 0, 0)
 titleLabel.BackgroundTransparency = 1
-titleLabel.TextColor3 = Color3.fromRGB(230, 230, 255)
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)  -- WHITE TEXT
 titleLabel.TextXAlignment = Enum.TextXAlignment.Left
 titleLabel.Font = Enum.Font.GothamBold
 titleLabel.TextSize = 12
-titleLabel.Text = "Auto Sell Pets"  -- REMOVED THE BOX/EMOJI
+titleLabel.Text = "Auto Sell Pets"
 titleLabel.Parent = titleBar
 
--- DESTROY GUI BUTTON (wider to fit text)
+-- DESTROY GUI BUTTON - BLACK AND WHITE
 local destroyBtn = Instance.new("TextButton")
 destroyBtn.Name = "DestroyBtn"
-destroyBtn.Size = UDim2.new(0, 65, 0, 22)  -- WIDER for text
+destroyBtn.Size = UDim2.new(0, 65, 0, 22)
 destroyBtn.Position = UDim2.new(1, -70, 0, 4)
-destroyBtn.BackgroundColor3 = Color3.fromRGB(180, 60, 60)
+destroyBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK
 destroyBtn.BackgroundTransparency = 0.2
 destroyBtn.BorderSizePixel = 0
-destroyBtn.Text = "Destroy GUI"  -- CHANGED FROM "X"
-destroyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+destroyBtn.Text = "Destroy GUI"
+destroyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)  -- WHITE TEXT
 destroyBtn.Font = Enum.Font.GothamBold
-destroyBtn.TextSize = 9  -- Smaller text to fit
+destroyBtn.TextSize = 9
 destroyBtn.Parent = titleBar
 
 local destroyCorner = Instance.new("UICorner")
-destroyCorner.CornerRadius = UDim.new(0, 6)  -- Slightly less rounded for text button
+destroyCorner.CornerRadius = UDim.new(0, 6)
 destroyCorner.Parent = destroyBtn
 
--- RAINBOW BORDER FOR DESTROY BUTTON
-local destroyStroke = createRainbowStroke(destroyBtn, 1.5)
+-- PLAIN BLACK BORDER
+local destroyStroke = createBlackStroke(destroyBtn, 1.5)
 
--- MINIMIZE BUTTON (moved left to make room)
+-- MINIMIZE BUTTON - BLACK AND WHITE
 local minBtn = Instance.new("TextButton")
 minBtn.Name = "MinBtn"
 minBtn.Size = UDim2.new(0, 22, 0, 22)
-minBtn.Position = UDim2.new(1, -95, 0, 4)  -- Moved left
+minBtn.Position = UDim2.new(1, -95, 0, 4)
+minBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK
 destroyBtn.BackgroundTransparency = 0.2
 minBtn.BorderSizePixel = 0
 minBtn.Text = "–"
-minBtn.TextColor3 = Color3.fromRGB(200, 200, 230)
-minBtn.Font = Enum.Font.GothamBold
+minBtn.TextColor3 = Color3.fromRGB(255, 255, 255)  -- WHITE TEXT
+destroyBtn.Font = Enum.Font.GothamBold
 minBtn.TextSize = 13
 minBtn.Parent = titleBar
 
@@ -137,20 +128,19 @@ minCorner.Parent = minBtn
 -- DESTROY BUTTON FUNCTIONALITY
 destroyBtn.MouseEnter:Connect(function()
 	TweenService:Create(destroyBtn, TweenInfo.new(0.15), {
-		BackgroundColor3 = Color3.fromRGB(220, 80, 80),
+		BackgroundColor3 = Color3.fromRGB(40, 40, 40),  -- DARK GRAY ON HOVER
 		BackgroundTransparency = 0.1
 	}):Play()
 end)
 
 destroyBtn.MouseLeave:Connect(function()
 	TweenService:Create(destroyBtn, TweenInfo.new(0.15), {
-		BackgroundColor3 = Color3.fromRGB(180, 60, 60),
+		BackgroundColor3 = Color3.fromRGB(0, 0, 0),
 		BackgroundTransparency = 0.2
 	}):Play()
 end)
 
 destroyBtn.MouseButton1Click:Connect(function()
-	-- Fade out and destroy
 	TweenService:Create(main, TweenInfo.new(0.2), {
 		Size = UDim2.new(0, 220, 0, 0),
 		BackgroundTransparency = 1
@@ -192,18 +182,18 @@ layout.Parent = content
 local function makeButton(text, color, layoutOrder)
 	local btn = Instance.new("TextButton")
 	btn.Size = UDim2.new(1, 0, 0, 29)
-	btn.BackgroundColor3 = color or Color3.fromRGB(40, 40, 58)
-	btn.BackgroundTransparency = 0.25  -- TRANSPARENT BUTTONS
+	btn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK BACKGROUND
+	btn.BackgroundTransparency = 0.2
 	btn.BorderSizePixel = 0
 	btn.Text = text
-	btn.TextColor3 = Color3.fromRGB(230, 230, 255)
+	btn.TextColor3 = Color3.fromRGB(255, 255, 255)  -- WHITE TEXT
 	btn.Font = Enum.Font.Gotham
 	btn.TextSize = 11
 	btn.LayoutOrder = layoutOrder or 0
 	btn.Parent = content
 
-	-- RAINBOW BORDER FOR BUTTONS
-	local btnStroke = createRainbowStroke(btn, 1.5)
+	-- PLAIN BLACK BORDER
+	local btnStroke = createBlackStroke(btn, 1.5)
 
 	local c = Instance.new("UICorner")
 	c.CornerRadius = UDim.new(0, 8)
@@ -211,32 +201,28 @@ local function makeButton(text, color, layoutOrder)
 
 	btn.MouseEnter:Connect(function()
 		TweenService:Create(btn, TweenInfo.new(0.15), {
-			BackgroundColor3 = Color3.fromRGB(
-				math.clamp(btn.BackgroundColor3.R * 255 + 30, 0, 255),
-				math.clamp(btn.BackgroundColor3.G * 255 + 30, 0, 255),
-				math.clamp(btn.BackgroundColor3.B * 255 + 30, 0, 255)
-			),
-			BackgroundTransparency = 0.15
+			BackgroundColor3 = Color3.fromRGB(40, 40, 40),  -- DARK GRAY HOVER
+			BackgroundTransparency = 0.1
 		}):Play()
 	end)
 	btn.MouseLeave:Connect(function()
 		TweenService:Create(btn, TweenInfo.new(0.15), {
-			BackgroundColor3 = color or Color3.fromRGB(40, 40, 58),
-			BackgroundTransparency = 0.25
+			BackgroundColor3 = Color3.fromRGB(0, 0, 0),
+			BackgroundTransparency = 0.2
 		}):Play()
 	end)
 	return btn
 end
 
-local toggleBtn = makeButton("Auto Sell: Off", Color3.fromRGB(40, 40, 58), 1)
-local folderBtn = makeButton("Folder: Common", Color3.fromRGB(35, 35, 52), 2)
-local petBtn    = makeButton("Select Pets ▾", Color3.fromRGB(35, 35, 52), 3)
+local toggleBtn = makeButton("Auto Sell:  OFF", Color3.fromRGB(0, 0, 0), 1)
+local folderBtn = makeButton("📁  Folder: Common", Color3.fromRGB(0, 0, 0), 2)
+local petBtn    = makeButton("🐾  Select Pets ▾", Color3.fromRGB(0, 0, 0), 3)
 
 local dropFrame = Instance.new("Frame")
 dropFrame.Name = "DropFrame"
-dropFrame.Size = UDim2.new(0, 220, 0, 0)  -- MATCHES MAIN WIDTH
-dropFrame.BackgroundColor3 = Color3.fromRGB(26, 26, 36)
-dropFrame.BackgroundTransparency = 0.2  -- TRANSPARENT DROPDOWN
+dropFrame.Size = UDim2.new(0, 220, 0, 0)
+dropFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK
+dropFrame.BackgroundTransparency = 0.1
 dropFrame.BorderSizePixel = 0
 dropFrame.ClipsDescendants = true
 dropFrame.Visible = false
@@ -247,14 +233,14 @@ local dropCorner = Instance.new("UICorner")
 dropCorner.CornerRadius = UDim.new(0, 9)
 dropCorner.Parent = dropFrame
 
--- RAINBOW BORDER FOR DROPDOWN
-local dropStroke = createRainbowStroke(dropFrame, 2)
+-- PLAIN BLACK BORDER
+local dropStroke = createBlackStroke(dropFrame, 2)
 
 local scroll = Instance.new("ScrollingFrame")
 scroll.Size = UDim2.new(1, 0, 1, 0)
 scroll.CanvasSize = UDim2.new(0, 0, 0, 0)
 scroll.ScrollBarThickness = 3
-scroll.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 140)
+scroll.ScrollBarImageColor3 = Color3.fromRGB(100, 100, 100)  -- GRAY SCROLLBAR
 scroll.BackgroundTransparency = 1
 scroll.BorderSizePixel = 0
 scroll.ZIndex = 10
@@ -281,13 +267,13 @@ end
 local function openDrop(height)
 	dropFrame.Visible = true
 	TweenService:Create(dropFrame, TweenInfo.new(0.18, Enum.EasingStyle.Quad), {
-		Size = UDim2.new(0, 220, 0, math.min(height, 176))  -- UPDATED WIDTH
+		Size = UDim2.new(0, 220, 0, math.min(height, 176))
 	}):Play()
 end
 
 local function closeDrop()
 	TweenService:Create(dropFrame, TweenInfo.new(0.15, Enum.EasingStyle.Quad), {
-		Size = UDim2.new(0, 220, 0, 0)  -- UPDATED WIDTH
+		Size = UDim2.new(0, 220, 0, 0)
 	}):Play()
 	task.delay(0.16, function() dropFrame.Visible = false end)
 end
@@ -303,30 +289,30 @@ end
 local function makeDropItem(text, color, onClick)
 	local item = Instance.new("TextButton")
 	item.Size = UDim2.new(1, 0, 0, 29)
-	item.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-	item.BackgroundTransparency = 0.3  -- TRANSPARENT ITEMS
+	item.BackgroundColor3 = Color3.fromRGB(0, 0, 0)  -- BLACK
+	item.BackgroundTransparency = 0.2
 	item.BorderSizePixel = 0
 	item.Text = text
-	item.TextColor3 = color or Color3.fromRGB(210, 210, 240)
+	item.TextColor3 = color or Color3.fromRGB(255, 255, 255)  -- WHITE TEXT
 	item.Font = Enum.Font.Gotham
 	item.TextSize = 11
 	item.ZIndex = 10
 	item.Parent = scroll
 
-	-- RAINBOW BORDER FOR DROP ITEMS
-	local itemStroke = createRainbowStroke(item, 1)
+	-- PLAIN BLACK BORDER
+	local itemStroke = createBlackStroke(item, 1)
 
 	local ic = Instance.new("UICorner")
 	ic.CornerRadius = UDim.new(0, 6)
 	ic.Parent = item
 
 	item.MouseEnter:Connect(function() 
-		item.BackgroundColor3 = Color3.fromRGB(50, 50, 70)
-		item.BackgroundTransparency = 0.2
+		item.BackgroundColor3 = Color3.fromRGB(40, 40, 40)  -- DARK GRAY HOVER
+		item.BackgroundTransparency = 0.1
 	end)
 	item.MouseLeave:Connect(function() 
-		item.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
-		item.BackgroundTransparency = 0.3
+		item.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+		item.BackgroundTransparency = 0.2
 	end)
 	item.MouseButton1Click:Connect(onClick)
 	return item
@@ -362,13 +348,12 @@ local function refreshPetDrop()
 
 	local ok, petsFolder = pcall(getPetsFolder)
 	if not ok then
-		makeDropItem("⚠ Open the pets menu first!", Color3.fromRGB(255, 120, 120), function() end)
+		makeDropItem("⚠  Buka menu pets dulu!", Color3.fromRGB(255, 120, 120), function() end)
 		scroll.CanvasSize = UDim2.new(0, 0, 0, 35)
 		openDrop(35)
 		return
 	end
 
-	-- Kumpulkan ImageLabel pet
 	local petLabels = {}
 	for _, v in pairs(petsFolder:GetChildren()) do
 		if v:IsA("ImageLabel") then
@@ -378,7 +363,7 @@ local function refreshPetDrop()
 	table.sort(petLabels, function(a, b) return a.Name < b.Name end)
 
 	if #petLabels == 0 then
-		makeDropItem("⚠ No pets", Color3.fromRGB(255, 180, 80), function() end)
+		makeDropItem("⚠  Tidak ada pet", Color3.fromRGB(255, 180, 80), function() end)
 		scroll.CanvasSize = UDim2.new(0, 0, 0, 35)
 		openDrop(35)
 		return
@@ -388,13 +373,12 @@ local function refreshPetDrop()
 		local petName = petLabel.Name
 		local isSelected = selectedPets[petName] ~= nil
 
-		-- Row container
 		local row = Instance.new("Frame")
 		row.Size = UDim2.new(1, 0, 0, 34)
 		row.BackgroundColor3 = isSelected
-			and Color3.fromRGB(70, 15, 15)   -- bg merah gelap saat selected
-			or  Color3.fromRGB(35, 35, 50)   -- bg normal
-		row.BackgroundTransparency = 0.3
+			and Color3.fromRGB(40, 40, 40)   -- DARK GRAY when selected
+			or  Color3.fromRGB(0, 0, 0)      -- BLACK normal
+		row.BackgroundTransparency = 0.2
 		row.BorderSizePixel = 0
 		row.ZIndex = 10
 		row.Parent = scroll
@@ -403,10 +387,9 @@ local function refreshPetDrop()
 		rowCorner.CornerRadius = UDim.new(0, 6)
 		rowCorner.Parent = row
 
-		-- RAINBOW BORDER FOR ROW
-		local rowStroke = createRainbowStroke(row, 1)
+		-- PLAIN BLACK BORDER
+		local rowStroke = createBlackStroke(row, 1)
 
-		-- Clone ImageLabel pet asli langsung
 		local imgClone = petLabel:Clone()
 		imgClone.Size = UDim2.new(0, 26, 0, 26)
 		imgClone.Position = UDim2.new(0, 4, 0.5, -13)
@@ -415,15 +398,14 @@ local function refreshPetDrop()
 		imgClone.ZIndex = 11
 		imgClone.Parent = row
 
-		-- Nama pet + emoji di samping gambar
 		local nameLabel = Instance.new("TextLabel")
 		nameLabel.Size = UDim2.new(1, -36, 1, 0)
 		nameLabel.Position = UDim2.new(0, 34, 0, 0)
 		nameLabel.BackgroundTransparency = 1
 		nameLabel.Text = isSelected and "🗑️  "..petName or petName
 		nameLabel.TextColor3 = isSelected
-			and Color3.fromRGB(255, 80, 80)   -- merah saat selected
-			or  Color3.fromRGB(200, 200, 240) -- putih normal
+			and Color3.fromRGB(255, 100, 100)   -- LIGHT RED when selected
+			or  Color3.fromRGB(255, 255, 255)   -- WHITE normal
 		nameLabel.TextXAlignment = Enum.TextXAlignment.Left
 		nameLabel.Font = Enum.Font.Gotham
 		nameLabel.TextSize = 11
@@ -431,7 +413,6 @@ local function refreshPetDrop()
 		nameLabel.ZIndex = 11
 		nameLabel.Parent = row
 
-		-- Invisible button overlay
 		local btn = Instance.new("TextButton")
 		btn.Size = UDim2.new(1, 0, 1, 0)
 		btn.BackgroundTransparency = 1
@@ -441,29 +422,27 @@ local function refreshPetDrop()
 
 		btn.MouseEnter:Connect(function()
 			row.BackgroundColor3 = selectedPets[petName]
-				and Color3.fromRGB(100, 20, 20)
-				or  Color3.fromRGB(50, 50, 70)
-			row.BackgroundTransparency = 0.2
+				and Color3.fromRGB(60, 60, 60)
+				or  Color3.fromRGB(40, 40, 40)
+			row.BackgroundTransparency = 0.1
 		end)
 		btn.MouseLeave:Connect(function()
 			row.BackgroundColor3 = selectedPets[petName]
-				and Color3.fromRGB(70, 15, 15)
-				or  Color3.fromRGB(35, 35, 50)
-			row.BackgroundTransparency = 0.3
+				and Color3.fromRGB(40, 40, 40)
+				or  Color3.fromRGB(0, 0, 0)
+			row.BackgroundTransparency = 0.2
 		end)
 		btn.MouseButton1Click:Connect(function()
 			if selectedPets[petName] then
-				-- Deselect: kembali normal
 				selectedPets[petName] = nil
 				nameLabel.Text = petName
-				nameLabel.TextColor3 = Color3.fromRGB(200, 200, 240)
-				row.BackgroundColor3 = Color3.fromRGB(35, 35, 50)
+				nameLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+				row.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 			else
-				-- Select: merah + emoji tempat sampah
 				selectedPets[petName] = true
 				nameLabel.Text = "🗑️  "..petName
-				nameLabel.TextColor3 = Color3.fromRGB(255, 80, 80)
-				row.BackgroundColor3 = Color3.fromRGB(70, 15, 15)
+				nameLabel.TextColor3 = Color3.fromRGB(255, 100, 100)
+				row.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 			end
 		end)
 	end
@@ -496,8 +475,8 @@ end)
 toggleBtn.MouseButton1Click:Connect(function()
 	autoSell = not autoSell
 	if autoSell then
-		toggleBtn.Text = "Auto Sell: On"
-		toggleBtn.BackgroundColor3 = Color3.fromRGB(40, 140, 80)
+		toggleBtn.Text = "Auto Sell:  ON"
+		toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 		task.spawn(function()
 			local firstSell = true
 			while autoSell do
@@ -516,8 +495,8 @@ toggleBtn.MouseButton1Click:Connect(function()
 			end
 		end)
 	else
-		toggleBtn.Text = "Auto Sell: Off"
-		toggleBtn.BackgroundColor3 = Color3.fromRGB(40, 40, 58)
+		toggleBtn.Text = "Auto Sell:  OFF"
+		toggleBtn.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
 	end
 end)
 
@@ -527,13 +506,13 @@ minBtn.MouseButton1Click:Connect(function()
 	minimized = not minimized
 	if minimized then
 		TweenService:Create(main, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-			Size = UDim2.new(0, 220, 0, 31)  -- UPDATED WIDTH
+			Size = UDim2.new(0, 220, 0, 31)
 		}):Play()
 		minBtn.Text = "+"
 		closeDrop()
 	else
 		TweenService:Create(main, TweenInfo.new(0.2, Enum.EasingStyle.Quad), {
-			Size = UDim2.new(0, 220, 0, 154)  -- UPDATED WIDTH
+			Size = UDim2.new(0, 220, 0, 154)
 		}):Play()
 		minBtn.Text = "–"
 	end
