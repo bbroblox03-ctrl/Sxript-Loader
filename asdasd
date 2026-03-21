@@ -15,7 +15,7 @@ local sellRemote = ReplicatedStorage:WaitForChild("RemotesEvent"):WaitForChild("
 local selectedFolder = "common"
 local selectedPets = {}
 local autoSell = false
-local sellDelay = 1
+local sellDelay = 0.5
 local rarities = {"common", "rare", "epic", "legendary", "mythic", "master"}
 
 local rarityColors = {
