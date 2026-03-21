@@ -16,7 +16,7 @@ local selectedFolder = "common"
 local selectedPets = {}
 local autoSell = false
 local sellDelay = 1
-local rarities = {"common", "rare", "epic", "legendary", "mythic"}
+local rarities = {"common", "rare", "epic", "legendary", "mythic", "master"}
 
 local rarityColors = {
 	common    = Color3.fromRGB(160, 160, 160),
